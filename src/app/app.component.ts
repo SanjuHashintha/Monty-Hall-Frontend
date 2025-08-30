@@ -1,13 +1,33 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { SimulationRequest, SimulationResult } from './models/simulation.models';
+import { MontyHallService } from './services/monty-hall.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'monty-hall-frontend';
+  title = 'Monty Hall Simulator';
+  result?: SimulationResult;
+  loading = false;
+  error = '';
+
+  constructor(private montyHallService: MontyHallService) {}
+
+  onSimulate(request: SimulationRequest) {
+    this.loading = true;
+    this.error = '';
+    
+    this.montyHallService.simulateGames(request).subscribe({
+      next: (result) => {
+        this.result = result;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Error running simulation: ' + err.message;
+        this.loading = false;
+      }
+    });
+  }
 }

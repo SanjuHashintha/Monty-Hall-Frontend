@@ -1,0 +1,63 @@
+.doors-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.door {
+  width: 100px;
+  height: 150px;
+  border: 3px solid #8B4513;
+  background: linear-gradient(145deg, #a56c3b, #8B4513);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.door-content {
+  font-size: 2.5rem;
+}
+
+.door-number {
+  position: absolute;
+  bottom: 5px;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.door.selected {
+  border-color: #ffc107;
+  box-shadow: 0 0 15px #ffc107;
+}
+
+.door.revealed {
+  border-color: #6c757d;
+  background: linear-gradient(145deg, #868686, #6c757d);
+  opacity: 0.7;
+}
+
+.door.final {
+  border-color: #007bff;
+  box-shadow: 0 0 20px #007bff;
+}
+
+.door.winner {
+  border-color: #28a745;
+  box-shadow: 0 0 25px #28a745;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

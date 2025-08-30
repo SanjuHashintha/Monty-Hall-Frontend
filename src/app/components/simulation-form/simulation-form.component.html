@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0">Monty Hall Simulation</h5>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="simulations" class="form-label">Number of Simulations</label>
+        <input type="number" class="form-control" id="simulations" 
+               [(ngModel)]="numberOfSimulations" name="simulations" 
+               min="1" max="10000" required>
+        <div class="form-text">How many games to simulate (1-10,000)</div>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label">Strategy</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="strategy" 
+                 id="switch" value=true [(ngModel)]="changeDoor" [checked]="changeDoor">
+          <label class="form-check-label" for="switch">
+            🚪 Switch doors after reveal
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="strategy" 
+                 id="stay" value=false [(ngModel)]="changeDoor" [checked]="!changeDoor">
+          <label class="form-check-label" for="stay">
+            🚪 Stay with initial choice
+          </label>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn btn-success w-100">
+        🎯 Run Simulation
+      </button>
+    </form>
+  </div>
+</div>

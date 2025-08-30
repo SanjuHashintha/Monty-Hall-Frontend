@@ -1,0 +1,33 @@
+<p>door-visualization works!</p>
+<div class="doors-container">
+  <div *ngFor="let door of doors" 
+       [class]="getDoorClass(door)"
+       class="door m-2">
+    <div class="door-content">
+      {{ getDoorContent(door) }}
+    </div>
+    <div class="door-number">Door {{ door + 1 }}</div>
+  </div>
+</div>
+
+<div class="mt-3" *ngIf="gameResult">
+  <div *ngIf="currentStep === 0">
+    <p>You selected Door {{ gameResult.selectedDoor + 1 }}</p>
+  </div>
+  
+  <div *ngIf="currentStep === 1">
+    <p>The host reveals Door {{ gameResult.revealedDoor + 1 }} with a goat!</p>
+  </div>
+  
+  <div *ngIf="currentStep === 2">
+    <p *ngIf="gameResult.finalDoor !== gameResult.selectedDoor">
+      You switched to Door {{ gameResult.finalDoor + 1 }}
+    </p>
+    <p *ngIf="gameResult.finalDoor === gameResult.selectedDoor">
+      You stayed with Door {{ gameResult.finalDoor + 1 }}
+    </p>
+    <p class="fw-bold" [class.text-success]="gameResult.win" [class.text-danger]="!gameResult.win">
+      {{ gameResult.win ? '🎉 You won the car!' : '😢 You got a goat!' }}
+    </p>
+  </div>
+</div>

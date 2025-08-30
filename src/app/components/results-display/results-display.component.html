@@ -1,0 +1,109 @@
+<div class="card mt-4" *ngIf="result">
+  <div class="card-header bg-info text-white">
+    <h5 class="mb-0">Simulation Results</h5>
+  </div>
+  <div class="card-body">
+    <!-- Summary Statistics -->
+    <div class="row text-center mb-4">
+      <div class="col-md-4">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h6>Total Games</h6>
+            <h3 class="text-primary">{{ result.totalGames }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card bg-success text-white">
+          <div class="card-body">
+            <h6>Wins</h6>
+            <h3>{{ result.wins }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card bg-danger text-white">
+          <div class="card-body">
+            <h6>Losses</h6>
+            <h3>{{ result.losses }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Win Percentage -->
+    <div class="progress mb-4" style="height: 30px;">
+      <div class="progress-bar bg-success" 
+           [style.width]="result.winPercentage + '%'">
+        Win Rate: {{ result.winPercentage | number:'1.2-2' }}%
+      </div>
+      <div class="progress-bar bg-danger" 
+           [style.width]="(100 - result.winPercentage) + '%'">
+        Loss Rate: {{ 100 - result.winPercentage | number:'1.2-2' }}%
+      </div>
+    </div>
+
+    <!-- Strategy Info -->
+    <div class="alert" [class.alert-warning]="!result.changeDoor" [class.alert-success]="result.changeDoor">
+      <strong>Strategy:</strong> 
+      {{ result.changeDoor ? 'Switching doors' : 'Staying with initial choice' }}
+      <span class="badge bg-secondary float-end">
+        Expected: {{ result.changeDoor ? '66.67%' : '33.33%' }}
+      </span>
+    </div>
+
+    <!-- Game Details -->
+    <div *ngIf="selectedGame" class="mt-4">
+      <h6>Game Details</h6>
+      <app-door-visualization 
+        [gameResult]="selectedGame" 
+        [currentStep]="currentStep">
+      </app-door-visualization>
+      
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary me-2" (click)="previousStep()" [disabled]="currentStep === 0">
+          Previous Step
+        </button>
+        <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === 2">
+          Next Step
+        </button>
+      </div>
+    </div>
+
+    <!-- Game Results Table -->
+    <div class="mt-4">
+      <h6>Individual Game Results (first 10)</h6>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Game #</th>
+              <th>Initial Door</th>
+              <th>Final Door</th>
+              <th>Result</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let game of result.gameResults.slice(0, 10); let i = index"
+                [class.table-success]="game.win" [class.table-danger]="!game.win">
+              <td>{{ i + 1 }}</td>
+              <td>Door {{ game.selectedDoor + 1 }}</td>
+              <td>Door {{ game.finalDoor + 1 }}</td>
+              <td>
+                <span class="badge" [class.bg-success]="game.win" [class.bg-danger]="!game.win">
+                  {{ game.win ? 'Win' : 'Loss' }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary" (click)="showGameDetails(game)">
+                  View Details
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
