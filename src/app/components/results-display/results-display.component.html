@@ -1,108 +1,239 @@
-<div class="card mt-4" *ngIf="result">
-  <div class="card-header bg-info text-white">
-    <h5 class="mb-0">Simulation Results</h5>
-  </div>
-  <div class="card-body">
-    <!-- Summary Statistics -->
-    <div class="row text-center mb-4">
-      <div class="col-md-4">
-        <div class="card bg-light">
-          <div class="card-body">
-            <h6>Total Games</h6>
-            <h3 class="text-primary">{{ result.totalGames }}</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card bg-success text-white">
-          <div class="card-body">
-            <h6>Wins</h6>
-            <h3>{{ result.wins }}</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card bg-danger text-white">
-          <div class="card-body">
-            <h6>Losses</h6>
-            <h3>{{ result.losses }}</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Win Percentage -->
-    <div class="progress mb-4" style="height: 30px;">
-      <div class="progress-bar bg-success" 
-           [style.width]="result.winPercentage + '%'">
-        Win Rate: {{ result.winPercentage | number:'1.2-2' }}%
-      </div>
-      <div class="progress-bar bg-danger" 
-           [style.width]="(100 - result.winPercentage) + '%'">
-        Loss Rate: {{ 100 - result.winPercentage | number:'1.2-2' }}%
-      </div>
-    </div>
-
-    <!-- Strategy Info -->
-    <div class="alert" [class.alert-warning]="!result.changeDoor" [class.alert-success]="result.changeDoor">
-      <strong>Strategy:</strong> 
-      {{ result.changeDoor ? 'Switching doors' : 'Staying with initial choice' }}
-      <span class="badge bg-secondary float-end">
-        Expected: {{ result.changeDoor ? '66.67%' : '33.33%' }}
+<div class="results-display">
+  <!-- Summary Section -->
+  <div class="summary-section">
+    <div class="section-header">
+      <i class="fas fa-chart-pie"></i>
+      <h4>Simulation Results</h4>
+      <span class="badge strategy-badge" [class.strategy-switch]="result.changeDoor" 
+            [class.strategy-stay]="!result.changeDoor">
+        {{ result.changeDoor ? 'Switching Strategy' : 'Staying Strategy' }}
       </span>
     </div>
 
-    <!-- Game Details -->
-    <div *ngIf="selectedGame" class="mt-4">
-      <h6>Game Details</h6>
+    <div class="stats-grid">
+      <!-- Total Games -->
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-gamepad"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ result.totalGames | number }}</div>
+          <div class="stat-label">Total Games</div>
+        </div>
+      </div>
+
+      <!-- Wins -->
+      <div class="stat-card success">
+        <div class="stat-icon">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ result.wins | number }}</div>
+          <div class="stat-label">Wins</div>
+          <div class="stat-percentage">{{ (result.wins / result.totalGames * 100) | number:'1.2-2' }}%</div>
+        </div>
+      </div>
+
+      <!-- Losses -->
+      <div class="stat-card danger">
+        <div class="stat-icon">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ result.losses | number }}</div>
+          <div class="stat-label">Losses</div>
+          <div class="stat-percentage">{{ (result.losses / result.totalGames * 100) | number:'1.2-2' }}%</div>
+        </div>
+      </div>
+
+      <!-- Win Rate -->
+      <div class="stat-card primary">
+        <div class="stat-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ result.winPercentage | number:'1.2-2' }}%</div>
+          <div class="stat-label">Win Rate</div>
+          <div class="stat-comparison">
+            vs {{ result.changeDoor ? '33.33%' : '66.67%' }} expected
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Visualization -->
+    <div class="progress-visualization">
+      <div class="progress-header">
+        <span>Win/Loss Distribution</span>
+        <span class="percentage">{{ result.winPercentage | number:'1.2-2' }}% wins</span>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill success" [style.width]="result.winPercentage + '%'">
+            <span class="progress-label">Wins</span>
+          </div>
+          <div class="progress-fill danger" [style.width]="(100 - result.winPercentage) + '%'">
+            <span class="progress-label">Losses</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Visualization -->
+  <div class="visualization-section" *ngIf="selectedGame">
+    <div class="section-header">
+      <i class="fas fa-eye"></i>
+      <h4>Game Visualization</h4>
+      <div class="step-controls">
+        <button class="btn btn-step" (click)="previousStep()" [disabled]="currentStep === 0">
+          <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        <span class="step-indicator">Step {{ currentStep + 1 }}/3</span>
+        <button class="btn btn-step" (click)="nextStep()" [disabled]="currentStep === 2">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="visualization-content">
       <app-door-visualization 
         [gameResult]="selectedGame" 
         [currentStep]="currentStep">
       </app-door-visualization>
-      
-      <div class="text-center mt-3">
-        <button class="btn btn-secondary me-2" (click)="previousStep()" [disabled]="currentStep === 0">
-          Previous Step
-        </button>
-        <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentStep === 2">
-          Next Step
+
+      <div class="game-details">
+        <div class="detail-card" [class.active]="currentStep >= 0">
+          <div class="detail-icon">
+            <i class="fas fa-mouse-pointer"></i>
+          </div>
+          <div class="detail-content">
+            <h6>Initial Selection</h6>
+            <p>Door {{ selectedGame.selectedDoor + 1 }}</p>
+          </div>
+        </div>
+
+        <div class="detail-card" [class.active]="currentStep >= 1">
+          <div class="detail-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div class="detail-content">
+            <h6>Host Reveals</h6>
+            <p>Door {{ selectedGame.revealedDoor + 1 }} (Goat)</p>
+          </div>
+        </div>
+
+        <div class="detail-card" [class.active]="currentStep >= 2">
+          <div class="detail-icon">
+            <i class="fas fa-flag-checkered"></i>
+          </div>
+          <div class="detail-content">
+            <h6>Final Choice</h6>
+            <p>Door {{ selectedGame.finalDoor + 1 }}</p>
+            <span class="result-badge" [class.win]="selectedGame.win" [class.loss]="!selectedGame.win">
+              {{ selectedGame.win ? '🏆 Winner!' : '❌ Lost' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Results Table -->
+  <div class="table-section">
+    <div class="section-header">
+      <i class="fas fa-table"></i>
+      <h4>Individual Game Results</h4>
+      <span class="table-info">Showing first {{ result.gameResults.slice(0, 10).length }} of {{ result.totalGames }} games</span>
+    </div>
+
+    <div class="table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Game #</th>
+            <th>Initial Door</th>
+            <th>Revealed Door</th>
+            <th>Final Door</th>
+            <th>Result</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let game of result.gameResults.slice(0, 10); let i = index" 
+              [class.win-row]="game.win" [class.loss-row]="!game.win">
+            <td class="game-number">
+              <span class="number-badge">{{ i + 1 }}</span>
+            </td>
+            <td class="door-cell">
+              <span class="door-badge">🚪 {{ game.selectedDoor + 1 }}</span>
+            </td>
+            <td class="door-cell">
+              <span class="door-badge goat">🐐 {{ game.revealedDoor + 1 }}</span>
+            </td>
+            <td class="door-cell">
+              <span class="door-badge" [class.car]="game.win" [class.goat]="!game.win">
+                {{ game.win ? '🚗 ' : '🐐 ' }}{{ game.finalDoor + 1 }}
+              </span>
+            </td>
+            <td class="result-cell">
+              <span class="result-indicator" [class.win]="game.win" [class.loss]="!game.win">
+                <i class="fas" [class.fa-check]="game.win" [class.fa-times]="!game.win"></i>
+                {{ game.win ? 'Win' : 'Loss' }}
+              </span>
+            </td>
+            <td class="action-cell">
+              <button class="btn btn-view" (click)="showGameDetails(game)">
+                <i class="fas fa-search"></i> View
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-footer">
+      <div class="pagination-info">
+        Showing 1-{{ result.gameResults.slice(0, 10).length }} of {{ result.totalGames }} results
+      </div>
+      <div class="table-actions">
+        <button class="btn btn-sm btn-outline-primary">
+          <i class="fas fa-download"></i> Export
         </button>
       </div>
     </div>
+  </div>
 
-    <!-- Game Results Table -->
-    <div class="mt-4">
-      <h6>Individual Game Results (first 10)</h6>
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Game #</th>
-              <th>Initial Door</th>
-              <th>Final Door</th>
-              <th>Result</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let game of result.gameResults.slice(0, 10); let i = index"
-                [class.table-success]="game.win" [class.table-danger]="!game.win">
-              <td>{{ i + 1 }}</td>
-              <td>Door {{ game.selectedDoor + 1 }}</td>
-              <td>Door {{ game.finalDoor + 1 }}</td>
-              <td>
-                <span class="badge" [class.bg-success]="game.win" [class.bg-danger]="!game.win">
-                  {{ game.win ? 'Win' : 'Loss' }}
-                </span>
-              </td>
-              <td>
-                <button class="btn btn-sm btn-outline-primary" (click)="showGameDetails(game)">
-                  View Details
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <!-- Strategy Analysis -->
+  <div class="analysis-section">
+    <div class="section-header">
+      <i class="fas fa-brain"></i>
+      <h4>Strategy Analysis</h4>
+    </div>
+
+    <div class="analysis-content">
+      <div class="analysis-card" [class.better]="result.changeDoor" [class.worse]="!result.changeDoor">
+        <div class="analysis-icon">
+          <i class="fas" [class.fa-arrow-up]="result.changeDoor" [class.fa-arrow-down]="!result.changeDoor"></i>
+        </div>
+        <div class="analysis-text">
+          <h5>{{ result.changeDoor ? 'Optimal Strategy' : 'Suboptimal Strategy' }}</h5>
+          <p>
+            {{ result.changeDoor ? 
+               'Switching doors gives you a 66.7% chance of winning. You made the right choice!' :
+               'Staying with your initial choice gives you only a 33.3% chance of winning. Consider switching next time!'
+            }}
+          </p>
+        </div>
+        <div class="analysis-stats">
+          <div class="expected-rate">
+            Expected: {{ result.changeDoor ? '66.67%' : '33.33%' }}
+          </div>
+          <div class="actual-rate" [class.better]="result.winPercentage > (result.changeDoor ? 66.67 : 33.33)"
+               [class.worse]="result.winPercentage < (result.changeDoor ? 66.67 : 33.33)">
+            Actual: {{ result.winPercentage | number:'1.2-2' }}%
+          </div>
+        </div>
       </div>
     </div>
   </div>

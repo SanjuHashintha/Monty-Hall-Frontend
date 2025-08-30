@@ -12,12 +12,14 @@ export class AppComponent {
   result?: SimulationResult;
   loading = false;
   error = '';
+  numberOfSimulations: number = 0;
 
   constructor(private montyHallService: MontyHallService) {}
 
   onSimulate(request: SimulationRequest) {
     this.loading = true;
     this.error = '';
+    this.numberOfSimulations = request.numberOfSimulations;
     
     this.montyHallService.simulateGames(request).subscribe({
       next: (result) => {
