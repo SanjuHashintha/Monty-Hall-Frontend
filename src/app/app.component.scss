@@ -1,25 +1,23 @@
-/* Global Styles */
 .monty-hall-app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2c3e50 0%, #4facfe 50%, #00f2fe 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Hero Section */
 .hero-section {
   position: relative;
-  padding: 4rem 0 3rem 0;
+  padding: 2rem 0;
   color: white;
   overflow: hidden;
+  min-height: auto;
 }
 
 .hero-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .floating-doors {
@@ -49,6 +47,10 @@
 .hero-content {
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  text-align: center;
 }
 
 .app-logo {
@@ -132,7 +134,6 @@
   opacity: 0.8;
 }
 
-/* Main Content */
 .main-content-section {
   padding: 2rem 0 4rem 0;
 }
@@ -152,12 +153,10 @@
   transform-style: preserve-3d;
 }
 
-/* Controls Section */
 .controls-section {
   height: 100%;
 }
 
-/* Info Panel */
 .info-panel {
   margin-top: 2rem;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -255,13 +254,11 @@
   margin-bottom: 0.25rem;
 }
 
-/* Results Section */
 .results-section {
   height: 100%;
   min-height: 600px;
 }
 
-/* Loading State */
 .loading-state {
   height: 100%;
   display: flex;
@@ -329,7 +326,6 @@
   50% { width: 70%; }
 }
 
-/* Error State */
 .error-state {
   margin-bottom: 2rem;
 }
@@ -378,7 +374,6 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Empty State */
 .empty-state {
   height: 100%;
   display: flex;
@@ -452,7 +447,6 @@
   font-size: 0.9rem;
 }
 
-/* Footer */
 .app-footer {
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
@@ -496,7 +490,6 @@
   text-align: right;
 }
 
-/* Responsive Design */
 @media (max-width: 1200px) {
   .hero-title {
     font-size: 3rem;
@@ -621,12 +614,10 @@
   }
 }
 
-/* Smooth transitions */
 * {
   transition: all 0.3s ease;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -644,7 +635,6 @@
   background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
 }
 
-/* Add scroll padding to account for fixed headers */
 html {
   scroll-padding-top: 80px;
 }
@@ -653,4 +643,67 @@ html {
   html {
     scroll-padding-top: 60px;
   }
+}
+
+.monty-hall-app .hero-section {
+  padding: 1.25rem 0 1rem !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+.monty-hall-app .app-logo {
+  margin-bottom: 0.75rem !important;
+}
+
+.monty-hall-app .logo-container {
+  gap: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.monty-hall-app .logo-icon {
+  font-size: 2rem !important;
+}
+
+.monty-hall-app .hero-title {
+  font-size: clamp(1.75rem, 2.2vw + 1rem, 2.6rem) !important;
+  line-height: 1.15 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.monty-hall-app .hero-subtitle {
+  font-size: 1rem !important;
+  margin-bottom: 1rem !important;
+  opacity: 0.9;
+}
+
+.monty-hall-app .hero-stats {
+  gap: 0.75rem !important;
+  margin-top: 1rem !important;
+}
+
+.monty-hall-app .hero-stats .stat-item {
+  padding: 0.5rem 0.75rem !important;
+  border-radius: 10px !important;
+}
+
+.monty-hall-app .hero-stats .stat-value {
+  font-size: 1.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.monty-hall-app .stat-label {
+  font-size: 0.8rem !important;
+}
+
+.monty-hall-app .door-float {
+  font-size: 2rem !important;
+  opacity: 0.5 !important;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .monty-hall-app .hero-section { padding: 0.9rem 0 0.75rem !important; }
+  .monty-hall-app .hero-title { font-size: 1.8rem !important; }
+  .monty-hall-app .hero-subtitle { font-size: 0.95rem !important; }
+  .monty-hall-app .hero-stats { margin-top: 0.75rem !important; gap: 0.5rem !important; }
 }

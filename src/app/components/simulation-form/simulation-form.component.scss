@@ -385,3 +385,51 @@
   transform: none !important;
   cursor: not-allowed;
 }
+
+/* Loading state styles */
+.strategy-card.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.strategy-card.disabled:hover {
+  transform: none !important;
+}
+
+/* Submit button loading state */
+.submit-btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.submit-btn:disabled:hover::before {
+  left: -100%;
+}
+
+.submit-btn.loading {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+}
+
+/* Quick actions disabled state */
+.quick-actions .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quick-actions .btn:disabled:hover {
+  transform: none;
+}
+
+/* Input disabled state */
+.form-control:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+/* Smooth transitions for disabled states */
+.strategy-card,
+.submit-btn,
+.quick-actions .btn {
+  transition: all 0.3s ease;
+}

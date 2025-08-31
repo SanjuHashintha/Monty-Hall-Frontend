@@ -63,7 +63,7 @@
                 <!-- Left Column - Controls -->
                 <div class="col-lg-5 col-md-6">
                   <div class="controls-section">
-                    <app-simulation-form (simulate)="onSimulate($event)"></app-simulation-form>
+                    <app-simulation-form (simulate)="onSimulate($event)" [loading]="loading"></app-simulation-form>
                     
                     <!-- Info Panel -->
                     <div class="info-panel">
@@ -227,9 +227,13 @@
         </div>
         
         <div class="footer-actions">
-          <button class="btn btn-outline-light btn-sm">
+          <a 
+            href="https://en.wikipedia.org/wiki/Monty_Hall_problem" 
+            target="_blank" 
+            class="btn btn-outline-light btn-sm" 
+            style="cursor: pointer; text-decoration: none;">
             <i class="fas fa-info-circle"></i> Learn More
-          </button>
+          </a>
         </div>
       </div>
     </div>

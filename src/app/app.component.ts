@@ -27,7 +27,7 @@ export class AppComponent {
       next: (result) => {
         this.result = result;
         this.loading = false;
-        setTimeout(() => this.scrollToResults(), 1000);
+        setTimeout(() => this.scrollToResults(), 100);
       },
       error: (err) => {
         this.error = 'Error running simulation: ' + err.message;

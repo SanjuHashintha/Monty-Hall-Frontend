@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { SimulationRequest } from '../../models/simulation.models';
 
 @Component({
@@ -8,11 +8,14 @@ import { SimulationRequest } from '../../models/simulation.models';
 })
 export class SimulationFormComponent {
   @Output() simulate = new EventEmitter<SimulationRequest>();
+  @Input() loading: boolean = false;
   
   numberOfSimulations: number = 1000;
   changeDoor: boolean = true;
 
   onSubmit() {
+    if (this.loading) return;
+    
     const request: SimulationRequest = {
       numberOfSimulations: this.numberOfSimulations,
       changeDoor: this.changeDoor
@@ -22,6 +25,8 @@ export class SimulationFormComponent {
   }
 
   quickRun(count: number) {
+    if (this.loading) return;
+    
     this.numberOfSimulations = count;
     setTimeout(() => this.onSubmit(), 300);
   }

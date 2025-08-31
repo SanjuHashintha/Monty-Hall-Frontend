@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SimulationFormComponent } from './components/simulation-form/simulation-form.component';
 import { ResultsDisplayComponent } from './components/results-display/results-display.component';
 import { DoorVisualizationComponent } from './components/door-visualization/door-visualization.component';
+import { EnvironmentService } from './services/environment.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { DoorVisualizationComponent } from './components/door-visualization/door
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [EnvironmentService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
