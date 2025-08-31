@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StatisticsModalComponent } from './statistics-modal.component';
+import { FormsModule } from '@angular/forms';
 
 describe('StatisticsModalComponent', () => {
   let component: StatisticsModalComponent;
@@ -8,10 +8,12 @@ describe('StatisticsModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StatisticsModalComponent]
-    })
-    .compileComponents();
-    
+      declarations: [StatisticsModalComponent],
+      imports: [FormsModule] 
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(StatisticsModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

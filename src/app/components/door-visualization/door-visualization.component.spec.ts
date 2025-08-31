@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DoorVisualizationComponent } from './door-visualization.component';
 
 describe('DoorVisualizationComponent', () => {
@@ -8,10 +7,11 @@ describe('DoorVisualizationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DoorVisualizationComponent]
-    })
-    .compileComponents();
-    
+      declarations: [DoorVisualizationComponent]
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(DoorVisualizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
