@@ -10,7 +10,7 @@
         <span class="door-float">🚗</span>
       </div>
     </div>
-    
+
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
@@ -22,16 +22,17 @@
                 <span class="logo-icon goat-icon">🐐</span>
               </div>
             </div>
-            
+
             <h1 class="hero-title">
               Monty Hall <span class="highlight">Simulator</span>
             </h1>
-            
+
             <p class="hero-subtitle">
-              Discover the fascinating probability paradox that has puzzled mathematicians for decades. 
-              Will you switch or stay? The choice is yours!
+              Discover the fascinating probability paradox that has puzzled
+              mathematicians for decades. Will you switch or stay? The choice is
+              yours!
             </p>
-            
+
             <div class="hero-stats">
               <div class="stat-item">
                 <div class="stat-value success">66.7%</div>
@@ -63,8 +64,11 @@
                 <!-- Left Column - Controls -->
                 <div class="col-lg-5 col-md-6">
                   <div class="controls-section">
-                    <app-simulation-form (simulate)="onSimulate($event)" [loading]="loading"></app-simulation-form>
-                    
+                    <app-simulation-form
+                      (simulate)="onSimulate($event)"
+                      [loading]="loading"
+                    ></app-simulation-form>
+
                     <!-- Info Panel -->
                     <div class="info-panel">
                       <div class="panel-header">
@@ -109,12 +113,13 @@
                             </div>
                           </div>
                         </div>
-                        
+
                         <div class="probability-insight">
                           <div class="insight-icon">💡</div>
                           <div class="insight-content">
                             <strong>Probability Insight:</strong>
-                            Switching doors doubles your chances of winning from 33% to 66%!
+                            Switching doors doubles your chances of winning from
+                            33% to 66%!
                           </div>
                         </div>
                       </div>
@@ -158,29 +163,45 @@
                     </div>
 
                     <!-- Results Display -->
-                    <app-results-display 
-                      *ngIf="result && !loading" 
-                      [result]="result">
+                    <app-results-display
+                      *ngIf="result && !loading"
+                      [result]="result"
+                    >
                     </app-results-display>
 
+                    <app-statistics-modal
+                      [result]="result!"
+                      [isOpen]="showStatistics"
+                      (closed)="closeStatistics()"
+                    >
+                    </app-statistics-modal>
+
                     <!-- Empty State -->
-                    <div *ngIf="!result && !loading" class="empty-state">
+                    <div class="empty-state">
                       <div class="empty-content">
                         <div class="empty-icon">
                           <i class="fas fa-door-open"></i>
                         </div>
                         <h3>Ready to Explore?</h3>
-                        <p>Configure your simulation settings and run your first test to see the Monty Hall paradox in action!</p>
-                        
+                        <p>
+                          Configure your simulation settings and run your first
+                          test to see the Monty Hall paradox in action!
+                        </p>
+
                         <div class="feature-cards">
-                          <div class="feature-card">
+                          <div
+                            class="feature-card"
+                            (click)="openStatistics()"
+                            *ngIf="result"
+                          >
                             <div class="feature-icon">
                               <i class="fas fa-chart-line"></i>
                             </div>
                             <h6>Statistical Analysis</h6>
-                            <p>See real probability distributions</p>
+                            <p>See detailed charts and analytics</p>
+                            <span class="click-hint">Click to view</span>
                           </div>
-                          
+
                           <div class="feature-card">
                             <div class="feature-icon">
                               <i class="fas fa-sliders-h"></i>
@@ -188,7 +209,7 @@
                             <h6>Multiple Strategies</h6>
                             <p>Compare switching vs staying</p>
                           </div>
-                          
+
                           <div class="feature-card">
                             <div class="feature-icon">
                               <i class="fas fa-bolt"></i>
@@ -214,24 +235,23 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <div class="brand-logo">
-            🎰 Monty Hall Simulator
-          </div>
+          <div class="brand-logo">🎰 Monty Hall Simulator</div>
           <p class="brand-tagline">
             Exploring probability through interactive simulation
           </p>
         </div>
-        
+
         <div class="footer-info">
           <p>Built with Angular & .NET Core | Probability Theory in Action</p>
         </div>
-        
+
         <div class="footer-actions">
-          <a 
-            href="https://en.wikipedia.org/wiki/Monty_Hall_problem" 
-            target="_blank" 
-            class="btn btn-outline-light btn-sm" 
-            style="cursor: pointer; text-decoration: none;">
+          <a
+            href="https://en.wikipedia.org/wiki/Monty_Hall_problem"
+            target="_blank"
+            class="btn btn-outline-light btn-sm"
+            style="cursor: pointer; text-decoration: none"
+          >
             <i class="fas fa-info-circle"></i> Learn More
           </a>
         </div>

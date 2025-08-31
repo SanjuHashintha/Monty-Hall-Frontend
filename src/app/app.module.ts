@@ -8,20 +8,25 @@ import { SimulationFormComponent } from './components/simulation-form/simulation
 import { ResultsDisplayComponent } from './components/results-display/results-display.component';
 import { DoorVisualizationComponent } from './components/door-visualization/door-visualization.component';
 import { EnvironmentService } from './services/environment.service';
+import { StatisticsModalComponent } from './components/statistics-modal/statistics-modal.component';
+import { CommonModule } from '@angular/common';
+import { StatisticsService } from './services/statistics.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     SimulationFormComponent,
     ResultsDisplayComponent,
-    DoorVisualizationComponent
+    DoorVisualizationComponent,
+    StatisticsModalComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
-  providers: [EnvironmentService ],
+  providers: [EnvironmentService, StatisticsService  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

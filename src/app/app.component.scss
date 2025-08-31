@@ -707,3 +707,40 @@ html {
   .monty-hall-app .hero-subtitle { font-size: 0.95rem !important; }
   .monty-hall-app .hero-stats { margin-top: 0.75rem !important; gap: 0.5rem !important; }
 }
+
+
+.feature-card {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.click-hint {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #667eea;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover .click-hint {
+  opacity: 1;
+}
+
+.stat-value.danger {
+  color: #ff6b6b;
+}
+
+.stat-value.info {
+  color: #3498db;
+}
