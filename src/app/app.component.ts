@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SimulationRequest, SimulationResult } from './models/simulation.models';
 import { MontyHallService } from './services/monty-hall.service';
 
@@ -8,6 +8,8 @@ import { MontyHallService } from './services/monty-hall.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  @ViewChild('resultsSection') resultsSection!: ElementRef;
+  
   title = 'Monty Hall Simulator';
   result?: SimulationResult;
   loading = false;
@@ -25,11 +27,23 @@ export class AppComponent {
       next: (result) => {
         this.result = result;
         this.loading = false;
+        setTimeout(() => this.scrollToResults(), 1000);
       },
       error: (err) => {
         this.error = 'Error running simulation: ' + err.message;
         this.loading = false;
+        setTimeout(() => this.scrollToResults(), 100);
       }
     });
+  }
+
+  scrollToResults() {
+    if (this.resultsSection) {
+      this.resultsSection.nativeElement.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
   }
 }

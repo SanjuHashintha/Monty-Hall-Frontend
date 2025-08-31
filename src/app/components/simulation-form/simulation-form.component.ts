@@ -23,12 +23,10 @@ export class SimulationFormComponent {
 
   quickRun(count: number) {
     this.numberOfSimulations = count;
-    // Auto-submit after quick selection
     setTimeout(() => this.onSubmit(), 300);
   }
 
   onInputChange() {
-    // Ensure value stays within bounds
     if (this.numberOfSimulations < 1) {
       this.numberOfSimulations = 1;
     } else if (this.numberOfSimulations > 10000) {

@@ -622,3 +622,111 @@
 * {
   transition: all 0.3s ease;
 }
+
+/* Highlight animation for visualization section */
+.highlight-section {
+  animation: highlightPulse 2s ease-in-out;
+  position: relative;
+}
+
+@keyframes highlightPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    transform: scale(1);
+  }
+  25% {
+    box-shadow: 0 0 0 15px rgba(102, 126, 234, 0.2);
+    transform: scale(1.02);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(102, 126, 234, 0.3);
+    transform: scale(1.01);
+  }
+  75% {
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2);
+    transform: scale(1.005);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    transform: scale(1);
+  }
+}
+
+/* Ensure visualization section has proper styling for highlight */
+.visualization-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Add a subtle border during highlight */
+.highlight-section::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #667eea;
+  border-radius: 22px;
+  animation: borderPulse 2s ease-in-out;
+  z-index: -1;
+}
+
+@keyframes borderPulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* View button loading state */
+.btn-view {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-content, .btn-loading {
+  transition: opacity 0.3s ease;
+}
+
+.btn-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.btn-view:disabled .btn-content {
+  opacity: 0;
+}
+
+.btn-view:disabled .btn-loading {
+  opacity: 1;
+}
+
+.visualization-content {
+  margin-top: 1.5rem;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure door visualization has smooth transitions */
+app-door-visualization {
+  display: block;
+  transition: all 0.3s ease;
+}
