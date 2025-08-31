@@ -1,0 +1,49 @@
+<div class="modal-overlay" [class.active]="isOpen" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>📊 Statistical Analysis</h3>
+      <button class="close-btn" (click)="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="chart-section" *ngIf="result">
+        <h4>Win/Loss Distribution ({{result.totalGames}} games)</h4>
+        <div class="chart-container">
+          <canvas id="winLossChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-section">
+        <h4>Theoretical Probabilities</h4>
+        <div class="chart-container">
+          <canvas id="strategyComparisonChart"></canvas>
+        </div>
+      </div>
+
+      <div class="stats-summary" *ngIf="result">
+        <div class="stat-item">
+          <span class="stat-label">Total Games:</span>
+          <span class="stat-value">{{ result.totalGames | number }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Wins:</span>
+          <span class="stat-value success">{{ result.wins | number }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Losses:</span>
+          <span class="stat-value danger">{{ result.losses | number }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Win Rate:</span>
+          <span class="stat-value info">{{ result.winPercentage | number:'1.2-2' }}%</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Strategy:</span>
+          <span class="stat-value">{{ result.changeDoor ? 'Switching' : 'Staying' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
